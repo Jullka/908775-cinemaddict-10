@@ -256,7 +256,7 @@ render(filmsList, createShowMoreButtonTemplate());
 render(filmsSection, createFilmsListTopTemplate());
 render(filmsSection, createFilmsListMostTemplate());
 
-const filmsListExtraTop = siteMainElement.querySelector(`.films:nth-child(2) .films-list__container`);
+const filmsListExtraTop = siteMainElement.querySelector(`.films-list--extra:nth-child(2) .films-list__container`);
 
 new Array(FILM__CARDS_EXTRA_COUNT)
   .fill(``)
@@ -264,7 +264,7 @@ new Array(FILM__CARDS_EXTRA_COUNT)
       () => render(filmsListExtraTop, createFilmCardTemplate())
   );
 
-const filmsListExtraMost = siteMainElement.querySelector(`.films::nth-child(3) .films-list__container`);
+const filmsListExtraMost = siteMainElement.querySelector(`.films-list--extra:nth-child(3) .films-list__container`);
 new Array(FILM__CARDS_EXTRA_COUNT)
   .fill(``)
   .forEach(
