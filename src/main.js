@@ -5,17 +5,14 @@ const FILM_CARDS_COUNT = 5;
 const FILM__CARDS_EXTRA_COUNT = 2;
 
 const createProfileTemplate = () => {
-  return (
-    `<section class="header__profile profile">
+  return `<section class="header__profile profile">
       <p class="profile__rating">Movie Buff</p>
       <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-    </section>`
-  );
+    </section>`;
 };
 
 const createMainNavigationTemplate = () => {
-  return (
-    `<nav class="main-navigation">
+  return `<nav class="main-navigation">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
       <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
       <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
@@ -26,42 +23,34 @@ const createMainNavigationTemplate = () => {
       <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
       <li><a href="#" class="sort__button">Sort by date</a></li>
       <li><a href="#" class="sort__button">Sort by rating</a></li>
-    </ul>`
-  );
+    </ul>`;
 };
 
 const createFilmsSectionTemplate = () => {
-  return (
-    `<section class="films">
+  return `<section class="films">
       <section class="films-list">
         <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
         <div class="films-list__container"></div>
       </section>
-    </section>`
-  );
+    </section>`;
 };
 
 const createFilmsListTopTemplate = () => {
-  return (
-    `<section class="films-list--extra">
+  return `<section class="films-list--extra">
       <h2 class="films-list__title">Top rated</h2>
       <div class="films-list__container"></div>
-    </section>`
-  );
+    </section>`;
 };
 
 const createFilmsListMostTemplate = () => {
-  return (
-    `<section class="films-list--extra">
+  return `<section class="films-list--extra">
       <h2 class="films-list__title">Most commented</h2>
       <div class="films-list__container"></div>
-    </section>`
-  );
+    </section>`;
 };
 
 const createFilmCardTemplate = () => {
-  return (
-    `<article class="film-card">
+  return `<article class="film-card">
       <h3 class="film-card__title">The Dance of Life</h3>
       <p class="film-card__rating">8.3</p>
       <p class="film-card__info">
@@ -77,19 +66,15 @@ const createFilmCardTemplate = () => {
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
         <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
       </form>
-    </article>`
-  );
+    </article>`;
 };
 
 const createShowMoreButtonTemplate = () => {
-  return (
-    `<button class="films-list__show-more">Show more</button>`
-  );
+  return `<button class="films-list__show-more">Show more</button>`;
 };
 
 const createFilmDetailsTemplate = () => {
-  return (
-    `<section class="film-details">
+  return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
         <div class="film-details__close">
@@ -241,8 +226,7 @@ const createFilmDetailsTemplate = () => {
         </section>
       </div>
     </form>
-  </section>`
-  );
+  </section>`;
 };
 
 
@@ -263,30 +247,28 @@ const filmListContainer = filmsSection.querySelector(`.films-list__container`);
 new Array(FILM_CARDS_COUNT)
   .fill(``)
   .forEach(
-    () => render(filmListContainer, createFilmCardTemplate())
+      () => render(filmListContainer, createFilmCardTemplate())
   );
 
 const filmsList = siteMainElement.querySelector(`.films-list`);
 render(filmsList, createShowMoreButtonTemplate());
 
-
-
 render(filmsSection, createFilmsListTopTemplate());
 render(filmsSection, createFilmsListMostTemplate());
 
-const filmsListExtra = siteMainElement.querySelector(`.films-list--extra .films-list__container`);
-
-new Array
-(FILM__CARDS_EXTRA_COUNT)
-  .fill(``)
-  .forEach(
-    () => render(filmsListExtra, createFilmCardTemplate())
-  );
+const filmsListExtraTop = siteMainElement.querySelector(`.films:nth-child(2) .films-list__container`);
 
 new Array(FILM__CARDS_EXTRA_COUNT)
   .fill(``)
   .forEach(
-    () => render(filmsListExtra, createFilmCardTemplate()))
-  ;
+      () => render(filmsListExtraTop, createFilmCardTemplate())
+  );
+
+const filmsListExtraMost = siteMainElement.querySelector(`.films::nth-child(3) .films-list__container`);
+new Array(FILM__CARDS_EXTRA_COUNT)
+  .fill(``)
+  .forEach(
+      () => render(filmsListExtraMost, createFilmCardTemplate()))
+;
 
 render(siteMainElement, createFilmDetailsTemplate());
