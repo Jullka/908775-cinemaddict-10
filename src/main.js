@@ -6,17 +6,22 @@ import {createFilmCardTemplate} from "./components/film-card";
 import {createFilmDetailsTemplate} from "./components/film-details";
 import {createFilmsListTopTemplate} from "./components/films-list-top";
 import {createFilmsListMostTemplate} from "./components/films-list-most";
+import {generateFilms, generateFilm} from './mock/films';
 
 
-const FILM_CARDS_COUNT = 5;
+const FILM_CARDS_COUNT = 17;
+const FILM_CARDS_COUNT_ON_START = 5;
 const FILM__CARDS_EXTRA_COUNT = 2;
+const WATCHED_FILMS_QUANTITY = 34;
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
+const generatedFilms = generateFilms(FILM_CARDS_COUNT);
+
 const siteHeaderElement = document.querySelector(`.header`);
-render(siteHeaderElement, createProfileTemplate());
+render(siteHeaderElement, createProfileTemplate(WATCHED_FILMS_QUANTITY));
 
 const siteMainElement = document.querySelector(`.main`);
 render(siteMainElement, createMainNavigationTemplate());
@@ -25,11 +30,10 @@ render(siteMainElement, createFilmsSectionTemplate());
 const filmsSection = siteMainElement.querySelector(`.films`);
 const filmListContainer = filmsSection.querySelector(`.films-list__container`);
 
-new Array(FILM_CARDS_COUNT)
-  .fill(``)
-  .forEach(
-      () => render(filmListContainer, createFilmCardTemplate())
-  );
+let showingFilmsCount = FILM_CARDS_COUNT_ON_START;
+generatedFilms
+  .slice(0, showingFilmsCount)
+  .forEach((film) => render(filmListContainer, createFilmCardTemplate(film)));
 
 const filmsList = siteMainElement.querySelector(`.films-list`);
 render(filmsList, createShowMoreButtonTemplate());
@@ -54,4 +58,4 @@ new Array(FILM__CARDS_EXTRA_COUNT)
       )
   );
 
-render(siteMainElement, createFilmDetailsTemplate());
+render(siteMainElement, createFilmDetailsTemplate(generateFilm()));
