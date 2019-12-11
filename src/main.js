@@ -4,14 +4,16 @@ import {createFilmsSectionTemplate} from "./components/films-section";
 import {createShowMoreButtonTemplate} from "./components/show-more-button";
 import {createFilmCardTemplate} from "./components/film-card";
 import {createFilmDetailsTemplate} from "./components/film-details";
-import {createFilmsListTopTemplate} from "./components/films-list-top";
-import {createFilmsListMostTemplate} from "./components/films-list-most";
-import {generateFilms, generateFilm} from './mock/films';
-
+import {createTopRatedsTemplate, getTopRated} from "./components/films-list-top";
+import {createMostCommentedTemplate, getMostCommented} from "./components/films-list-most";
+import {createCommentsTemplate} from './components/comments';
+import {generateFilms} from './mock/films';
+import {generateFilters} from './mock/filters';
+import {generateComments} from './mock/comment.js';
 
 const FILM_CARDS_COUNT = 17;
 const FILM_CARDS_COUNT_ON_START = 5;
-const FILM__CARDS_EXTRA_COUNT = 2;
+const FILM_CARDS_COUNT_BY_BUTTON = 5;
 const WATCHED_FILMS_QUANTITY = 34;
 
 const render = (container, template, place = `beforeend`) => {
@@ -24,38 +26,53 @@ const siteHeaderElement = document.querySelector(`.header`);
 render(siteHeaderElement, createProfileTemplate(WATCHED_FILMS_QUANTITY));
 
 const siteMainElement = document.querySelector(`.main`);
-render(siteMainElement, createMainNavigationTemplate());
+render(siteMainElement, createMainNavigationTemplate(generateFilters()));
 render(siteMainElement, createFilmsSectionTemplate());
 
 const filmsSection = siteMainElement.querySelector(`.films`);
 const filmListContainer = filmsSection.querySelector(`.films-list__container`);
-
 let showingFilmsCount = FILM_CARDS_COUNT_ON_START;
 generatedFilms
   .slice(0, showingFilmsCount)
   .forEach((film) => render(filmListContainer, createFilmCardTemplate(film)));
 
+render(filmsSection, createTopRatedsTemplate());
+render(filmsSection, createMostCommentedTemplate());
+
+const filmsListExtraElements = filmsSection.querySelectorAll(`.films-list--extra`);
+
+const topRatedFilmsListContainerElement = filmsListExtraElements[0].querySelector(`.films-list__container`);
+const topRated = getTopRated(generatedFilms);
+if (topRated[0].rating > 0) {
+  topRated.forEach((film) => {
+    render(topRatedFilmsListContainerElement, createFilmCardTemplate(film));
+  });
+}
+
+const mostCommentedFilmsListContainerElement = filmsListExtraElements[1].querySelector(`.films-list__container`);
+const mostCommented = getMostCommented(generatedFilms);
+if (mostCommented[0].comments.length > 0) {
+  mostCommented.forEach((film) => {
+    render(mostCommentedFilmsListContainerElement, createFilmCardTemplate(film));
+  });
+}
+
+render(siteMainElement, createFilmDetailsTemplate(generatedFilms[0]));
+const popupBottomElement = document.querySelector(`.form-details__bottom-container`);
+const comments = generateComments(generatedFilms[0].comments);
+render(popupBottomElement, createCommentsTemplate(comments));
+
 const filmsList = siteMainElement.querySelector(`.films-list`);
 render(filmsList, createShowMoreButtonTemplate());
+const showMoreButton = document.querySelector(`.films-list__show-more`);
+showMoreButton.addEventListener(`click`, () => {
+  const prevTasksCount = showingFilmsCount;
+  showingFilmsCount += FILM_CARDS_COUNT_BY_BUTTON;
 
-render(filmsSection, createFilmsListTopTemplate());
-render(filmsSection, createFilmsListMostTemplate());
+  generatedFilms.slice(prevTasksCount, showingFilmsCount).forEach((film) => render(filmListContainer, createFilmCardTemplate(film)));
 
-const filmsListExtraTop = siteMainElement.querySelector(`.films-list--extra:nth-child(2) .films-list__container`);
+  if (showingFilmsCount >= FILM_CARDS_COUNT) {
+    showMoreButton.remove();
+  }
+});
 
-new Array(FILM__CARDS_EXTRA_COUNT)
-  .fill(``)
-  .forEach(
-      () => render(filmsListExtraTop, createFilmCardTemplate()
-      )
-  );
-
-const filmsListExtraMost = siteMainElement.querySelector(`.films-list--extra:nth-child(3) .films-list__container`);
-new Array(FILM__CARDS_EXTRA_COUNT)
-  .fill(``)
-  .forEach(
-      () => render(filmsListExtraMost, createFilmCardTemplate()
-      )
-  );
-
-render(siteMainElement, createFilmDetailsTemplate(generateFilm()));

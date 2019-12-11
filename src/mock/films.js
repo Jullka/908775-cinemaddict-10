@@ -1,4 +1,5 @@
-import {getRandomIntegerNumber, getRandomArrayItem} from '../utils';
+import {getRandomIntegerNumber, getRandomArrayItem} from "../utils";
+import {generateComments} from "./comment";
 
 const Titles = [
   `Back to the Future`,
@@ -54,14 +55,6 @@ const Countries = [`USA`, `UK`, `Spain`, `Russia`, `Italy`, `Canada`, `Hungary`]
 
 const Genres = [`Adventure`, `Drama`, `Mystery`, `Thriller`, `Comedy`, `Crime`, `Action`, `Animation`];
 
-const Emojies = [
-  `./images/emoji/trophy.png`,
-  `./images/emoji/smile.png`,
-  `./images/emoji/sleeping.png`,
-  `./images/emoji/puke.png`,
-  `./images/emoji/angry.png`
-];
-
 const getRandomDescription = () => {
   return new Array(getRandomIntegerNumber(1, 3))
     .fill(` `)
@@ -82,13 +75,6 @@ const getRandomActors = () => {
     .fill(``)
     .map(() => getRandomArrayItem(Names))
     .join(` `);
-};
-
-const getRandomCommentDate = () => {
-  const startDate = new Date(2000, 0, 1);
-  const endDate = new Date();
-
-  return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 };
 
 const getRandomGenres = (genres) => {
@@ -115,26 +101,8 @@ const generateFilm = () => {
     description: getRandomDescription(),
     country: getRandomArrayItem(Countries),
     age: getRandomArrayItem(Ages),
-    comments: generateComments(getRandomIntegerNumber(0, 50)),
+    comments: generateComments(getRandomIntegerNumber(0, 50))
   };
-};
-
-const generateComment = () => {
-  return {
-    emoji: getRandomArrayItem(Emojies),
-    text: getRandomArrayItem(Descriptions),
-    userName: getRandomArrayItem(Names),
-    date: getRandomCommentDate()
-  };
-};
-
-const generateComments = (quantity) => {
-  return new Array(quantity)
-    .fill(``)
-    .map(() => generateComment())
-    .sort((first, second) => {
-      return first.date - second.date;
-    });
 };
 
 const generateFilms = (quantity) => {
@@ -143,4 +111,4 @@ const generateFilms = (quantity) => {
     .map(() => generateFilm());
 };
 
-export {generateFilm, generateComments, generateFilms};
+export {generateFilm, generateFilms};
