@@ -60,8 +60,7 @@ if (mostCommented[0].comments.length > 0) {
 const siteBodyElement = document.querySelector(`body`);
 render(siteBodyElement, createFilmDetailsTemplate(generatedFilms[0]));
 const popupBottomElement = document.querySelector(`.form-details__bottom-container`);
-const comments = generateComments(generatedFilms[0].comments);
-render(popupBottomElement, createCommentsTemplate(comments));
+render(popupBottomElement, createCommentsTemplate(generatedFilms[0].comments));
 
 const filmsList = siteMainElement.querySelector(`.films-list`);
 render(filmsList, createShowMoreButtonTemplate());
