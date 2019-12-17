@@ -1,7 +1,8 @@
-const filterNames = [`all`, `watchlist`, `history`, `favorites`];
+const FilterNames = [`all`, `watchlist`, `history`, `favorites`];
 
 const generateFilters = () => {
-  return filterNames.map((it) => {
+  return FilterNames
+  .map((it) => {
     return {
       name: it,
       count: Math.floor(Math.random() * 10)

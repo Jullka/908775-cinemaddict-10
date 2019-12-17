@@ -32,13 +32,6 @@ const getRandomCommentDate = () => {
   return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 };
 
-// const getRandomCommentDate = () => {
-//   const date = getRandomIntegerNumber(Day.begin, Day.end);
-//   const month = getRandomArrayItem(Months);
-//   const year = getRandomIntegerNumber(Year.begin, Year.end);
-//   return `${date} ${month} ${year}`;
-// };
-
 export const createCommentsTemplate = (comments) => {
   return Array.from(comments)
     .map((comment) => (`<li class="film-details__comment">

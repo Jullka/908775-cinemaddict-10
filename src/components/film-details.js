@@ -40,7 +40,7 @@ export const createFilmDetailsTemplate = (filmData) => {
                       </tr>
                       <tr class="film-details__row">
                         <td class="film-details__term">Release Date</td>
-                        <td class="film-details__cell">${releaseDate.getDay()}.${releaseDate.getMonth() + 1}.${releaseDate.getFullYear()}</td>
+                        <td class="film-details__cell">${releaseDate}</td>
                       </tr>
                       <tr class="film-details__row">
                         <td class="film-details__term">Runtime</td>

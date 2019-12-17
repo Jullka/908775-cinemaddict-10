@@ -70,6 +70,19 @@ const getRandomRunTime = () => {
   return `${RunTimeHours}h : ${RunTimeMinutes}m`;
 };
 
+const getRandomDate = () => {
+  const startDate = new Date(1950, 0, 1);
+  const endDate = new Date();
+  const options = {
+    day: `numeric`,
+    month: `long`,
+    year: `numeric`
+  };
+
+  return new Intl.DateTimeFormat(`en-GB`, options)
+    .format(new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime())));
+};
+
 const getRandomActors = () => {
   return new Array(getRandomIntegerNumber(1, 6))
     .fill(``)
@@ -97,7 +110,7 @@ const generateFilm = () => {
     director: getRandomArrayItem(Names),
     writers: getRandomArrayItem(Names),
     actors: getRandomActors(),
-    releaseDate: new Date(getRandomIntegerNumber(1980, 2019), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 28)),
+    releaseDate: getRandomDate(),
     description: getRandomDescription(),
     country: getRandomArrayItem(Countries),
     age: getRandomArrayItem(Ages),

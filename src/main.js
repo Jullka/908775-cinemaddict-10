@@ -57,7 +57,8 @@ if (mostCommented[0].comments.length > 0) {
   });
 }
 
-render(siteMainElement, createFilmDetailsTemplate(generatedFilms[0]));
+const siteBodyElement = document.querySelector(`body`);
+render(siteBodyElement, createFilmDetailsTemplate(generatedFilms[0]));
 const popupBottomElement = document.querySelector(`.form-details__bottom-container`);
 const comments = generateComments(generatedFilms[0].comments);
 render(popupBottomElement, createCommentsTemplate(comments));
