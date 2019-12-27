@@ -1,5 +1,5 @@
-import {getRandomIntegerNumber, getRandomArrayItem} from "../utils";
-import {generateComments} from "./comment";
+import {getRandomIntegerNumber, getRandomArrayItem} from '../utils.js';
+import {generateComments} from './comment.js';
 
 const Titles = [
   `Back to the Future`,
@@ -25,13 +25,13 @@ const Titles = [
 ];
 
 const Posters = [
-  `/images/posters/made-for-each-other.png`,
-  `/images/posters/popeye-meets-sinbad.png`,
-  `/images/posters/sagebrush-trail.jpg`,
-  `/images/posters/santa-claus-conquers-the-martians.jpg`,
-  `/images/posters/the-dance-of-life.jpg`,
-  `/images/posters/the-great-flamarion.jpg`,
-  `/images/posters/the-man-with-the-golden-arm.jpg`
+  `made-for-each-other.png`,
+  `popeye-meets-sinbad.png`,
+  `sagebrush-trail.jpg`,
+  `santa-claus-conquers-the-martians.jpg`,
+  `the-dance-of-life.jpg`,
+  `the-great-flamarion.jpg`,
+  `the-man-with-the-golden-arm.jpg`
 ];
 
 const Descriptions = [
@@ -55,73 +55,64 @@ const Countries = [`USA`, `UK`, `Spain`, `Russia`, `Italy`, `Canada`, `Hungary`]
 
 const Genres = [`Adventure`, `Drama`, `Mystery`, `Thriller`, `Comedy`, `Crime`, `Action`, `Animation`];
 
-const getRandomDescription = () => {
-  return new Array(getRandomIntegerNumber(1, 3))
-    .fill(` `)
-    .map(() => getRandomArrayItem(Descriptions))
-    .join(` `);
+const generateRating = () => {
+  return getRandomIntegerNumber(10, 99) / 10.0;
 };
 
-const getRandomRunTime = () => {
-  const randomRunTime = getRandomIntegerNumber(0, 300);
-  const RunTimeHours = Math.floor(randomRunTime / 60);
-  const RunTimeMinutes = randomRunTime % 60;
-
-  return `${RunTimeHours}h : ${RunTimeMinutes}m`;
+const generateDuration = () => {
+  const fullMinutes = getRandomIntegerNumber(10, 180);
+  const hours = Math.floor(fullMinutes / 60);
+  const minutes = fullMinutes % 60;
+  return `${hours ? hours + `h` : ``} ${minutes}m`;
 };
 
-const getRandomDate = () => {
-  const startDate = new Date(1950, 0, 1);
-  const endDate = new Date();
-  const options = {
-    day: `numeric`,
-    month: `long`,
-    year: `numeric`
-  };
-
-  return new Intl.DateTimeFormat(`en-GB`, options)
-    .format(new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime())));
+const generateRandomArray = (count, array) => {
+  const set = new Set();
+  while (set.size < count) {
+    set.add(getRandomArrayItem(array));
+  }
+  return Array.from(set);
 };
 
-const getRandomActors = () => {
-  return new Array(getRandomIntegerNumber(1, 6))
-    .fill(``)
-    .map(() => getRandomArrayItem(Names))
-    .join(` `);
+const generateRandomStringFromArray = (count, array, space) => {
+  let out = ``;
+  generateRandomArray(getRandomIntegerNumber(1, count), array).forEach((item, index) => {
+    out = index === 0 ? out + item : out + space + item;
+  });
+  return out;
 };
 
-const getRandomGenres = (genres) => {
-  return genres
-    .filter(() => Math.random() > 0.5)
-    .slice(0, 3);
+const generateRandomCheck = () => {
+  return Math.random() > 0.5;
 };
 
 const generateFilm = () => {
   const filmTitle = getRandomArrayItem(Titles);
   return {
-    poster: getRandomArrayItem(Posters),
     title: filmTitle,
-    rating: `${getRandomIntegerNumber(0, 9)}.${getRandomIntegerNumber(0, 9)}`,
-    year: getRandomIntegerNumber(1980, 2019),
-    duration: getRandomRunTime(),
-    genre: getRandomArrayItem(Genres),
-    genres: new Set(getRandomGenres(Genres)),
     titleOriginal: filmTitle,
+    rating: generateRating(),
+    releaseDate: new Date(getRandomIntegerNumber(1930, 1950), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 28)),
+    duration: generateDuration(),
+    genres: generateRandomArray(getRandomIntegerNumber(1, 3), Genres),
+    poster: getRandomArrayItem(Posters),
+    description: generateRandomStringFromArray(5, Descriptions, ` `),
+    comments: generateComments(),
     director: getRandomArrayItem(Names),
-    writers: getRandomArrayItem(Names),
-    actors: getRandomActors(),
-    releaseDate: getRandomDate(),
-    description: getRandomDescription(),
+    writers: generateRandomStringFromArray(3, Names, `, `),
+    actors: generateRandomStringFromArray(5, Names, `, `),
     country: getRandomArrayItem(Countries),
     age: getRandomArrayItem(Ages),
-    comments: generateComments(getRandomIntegerNumber(0, 50))
+    isAddedToWatchlist: generateRandomCheck(),
+    isAlreadyWatched: generateRandomCheck(),
+    isAddedToFavorites: generateRandomCheck()
   };
 };
 
-const generateFilms = (quantity) => {
-  return new Array(quantity)
+const generateFilms = (count) => {
+  return new Array(count)
     .fill(``)
-    .map(() => generateFilm());
+    .map(generateFilm);
 };
 
 export {generateFilm, generateFilms};
