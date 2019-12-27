@@ -1,9 +1,8 @@
 import {createElement} from '../utils.js';
-import Comment from './comment.js';
 
-export default class Comments {
-  constructor(film) {
-    this._film = film;
+export default class FooterStatistic {
+  constructor(films) {
+    this._films = films;
     this._element = null;
   }
 
@@ -11,6 +10,7 @@ export default class Comments {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
+
     return this._element;
   }
 
@@ -19,10 +19,10 @@ export default class Comments {
   }
 
   getTemplate() {
-    let outStr = ``;
-    this._film.comments.forEach((item) => {
-      outStr = outStr + new Comment(item).getTemplate();
-    });
-    return outStr;
+    return (
+      `<section class="footer__statistics">
+        <p>${this._films.length.toString()} movies inside</p>
+      </section>`
+    );
   }
 }
