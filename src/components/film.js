@@ -1,6 +1,6 @@
 import FilmCard from './film-card.js';
 import FilmDetails from './film-details.js';
-import {render, RenderPosition} from "../utils";
+import {render, RenderPosition} from "../utils.js";
 
 export const createFilmElement = (film) => {
   const filmCard = new FilmCard(film);
@@ -10,20 +10,22 @@ export const createFilmElement = (film) => {
   const detailsElement = filmDetails.getElement();
   const closeButton = detailsElement.querySelector(`.film-details__close-btn`);
 
+  const closeDetail = () => {
+    document.querySelector(`.film-details`).remove();
+    closeButton.removeEventListener(`click`, onCloseClick);
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  };
+
   const onEscKeyDown = (evt) => {
     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
     if (isEscKey) {
-      document.querySelector(`.film-details`).remove();
-      closeButton.removeEventListener(`click`, onCloseClick);
-      document.removeEventListener(`keydown`, onEscKeyDown);
+      closeDetail();
     }
   };
 
   const onCloseClick = () => {
-    document.querySelector(`.film-details`).remove();
-    closeButton.removeEventListener(`click`, onCloseClick);
-    document.removeEventListener(`keydown`, onEscKeyDown);
+    closeDetail();
   };
 
   const onClick = () => {
