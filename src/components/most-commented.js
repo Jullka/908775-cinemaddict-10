@@ -1,4 +1,5 @@
-import {createElement} from '../utils.js';
+import {render, createElement} from '../utils.js';
+import {createFilmElement} from "./film";
 
 const MOST_COMMENTED_FILMS_COUNT = 2;
 
@@ -16,6 +17,11 @@ export default class MostCommented {
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
+      const mostCommentedFilmsListContainerElement = this._element.querySelector(`.films-list__container`);
+
+      this.getMostCommented().forEach((film) => {
+        render(mostCommentedFilmsListContainerElement, createFilmElement(film));
+      });
     }
 
     return this._element;

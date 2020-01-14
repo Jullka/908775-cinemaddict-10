@@ -1,4 +1,5 @@
-import {createElement} from '../utils.js';
+import {render, createElement} from '../utils.js';
+import {createFilmElement} from "./film.js";
 
 const TOP_RATED_FILMS_COUNT = 2;
 
@@ -15,6 +16,11 @@ export default class TopRated {
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
+      const topRatedFilmsListContainerElement = this._element.querySelector(`.films-list__container`);
+
+      this.getTopRated().forEach((film) => {
+        render(topRatedFilmsListContainerElement, createFilmElement(film));
+      });
     }
 
     return this._element;
