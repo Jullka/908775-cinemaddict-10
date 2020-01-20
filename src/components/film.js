@@ -1,42 +1,43 @@
-import FilmCard from './film-card.js';
-import FilmDetails from './film-details.js';
-import {render, RenderPosition} from "../utils.js";
+// import FilmCardComponent from './film-card.js';
+// import FilmDetailsComponent from './film-details.js';
+// import {render, RenderPosition} from "../utils.js";
 
-export const createFilmElement = (film) => {
-  const filmCard = new FilmCard(film);
-  const filmDetails = new FilmDetails(film);
-  const footer = document.querySelector(`.footer`);
-  const cardElement = filmCard.getElement();
-  const detailsElement = filmDetails.getElement();
-  const closeButton = detailsElement.querySelector(`.film-details__close-btn`);
+// export const createFilmElement = (film) => {
+//   const filmCard = new FilmCardComponent(film);
+//   const filmDetails = new FilmDetailsComponent(film);
+//   const footer = document.querySelector(`.footer`);
+//   const cardElement = filmCard.getElement();
+//   const detailsElement = filmDetails.getElement();
+//   const closeButton = detailsElement.querySelector(`.film-details__close-btn`);
 
-  const closeDetail = () => {
-    document.querySelector(`.film-details`).remove();
-    closeButton.removeEventListener(`click`, onCloseClick);
-    document.removeEventListener(`keydown`, onEscKeyDown);
-  };
+//   const closeDetail = () => {
+//     document.querySelector(`.film-details`).remove();
+//     closeButton.removeEventListener(`click`, onCloseClick);
+//     document.removeEventListener(`keydown`, onEscKeyDown);
+//   };
 
-  const onEscKeyDown = (evt) => {
-    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+//   const onEscKeyDown = (evt) => {
+//     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
-    if (isEscKey) {
-      closeDetail();
-    }
-  };
+//     if (isEscKey) {
+//       closeDetail();
+//     }
+//   };
 
-  const onCloseClick = () => {
-    closeDetail();
-  };
+//   const onCloseClick = () => {
+//     closeDetail();
+//   };
 
-  const onClick = () => {
-    closeButton.addEventListener(`click`, onCloseClick);
-    render(footer, detailsElement, RenderPosition.AFTEREND);
-    document.addEventListener(`keydown`, onEscKeyDown);
-  };
+//   const onClick = () => {
+//     closeButton.addEventListener(`click`, onCloseClick);
+//     render(footer, detailsElement, RenderPosition.AFTEREND);
+//     document.addEventListener(`keydown`, onEscKeyDown);
+//   };
 
-  cardElement.querySelector(`.film-card__title`).addEventListener(`click`, onClick);
-  cardElement.querySelector(`.film-card__poster`).addEventListener(`click`, onClick);
-  cardElement.querySelector(`.film-card__comments`).addEventListener(`click`, onClick);
+//   cardElement.querySelector(`.film-card__title`).addEventListener(`click`, onClick);
+//   cardElement.querySelector(`.film-card__poster`).addEventListener(`click`, onClick);
+//   cardElement.querySelector(`.film-card__comments`).addEventListener(`click`, onClick);
 
-  return cardElement;
-};
+//   return cardElement;
+// };
+

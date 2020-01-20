@@ -1,21 +1,9 @@
-import {createElement} from '../utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmCard {
+export default class FilmCardComponent extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {
@@ -36,5 +24,11 @@ export default class FilmCard {
                 <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
               </form>
             </article>`;
+  }
+
+  setOpenDetailHandler(handler) {
+    this.getElement()
+      .querySelectorAll(`.film-card__title, .film-card__poster, .film-card__comments`)
+      .forEach((element) => element.addEventListener(`click`, handler));
   }
 }
