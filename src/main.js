@@ -20,7 +20,7 @@ render(siteMainElement, new MainNavigationComponent(films).getElement());
 render(siteMainElement, new SortComponent().getElement());
 
 const filmsSection = new FilmsSectionComponent();
-render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
+render(siteMainElement, filmsSection.getElement(), RenderPosition.BEFOREEND);
 
 const pageController = new PageController(filmsSection);
 pageController.render(films);

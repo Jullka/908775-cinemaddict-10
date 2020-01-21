@@ -1,14 +1,3 @@
-// import AbstractComponent from './abstract-component.js';
-
-// export default class FilmsSectionComponent extends AbstractComponent {
-
-//   getTemplate() {
-//     return (
-//       `<section class="films"></section>`
-//     );
-//   }
-// }
-
 import AbstractComponent from './abstract-component.js';
 
 export default class FilmsSectionComponent extends AbstractComponent {

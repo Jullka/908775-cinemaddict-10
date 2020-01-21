@@ -3,8 +3,6 @@ import FilmCardComponent from "../components/film-card.js";
 import NoFilmsComponent from "../components/no-films.js";
 import FilmDetailsComponent from "../components/film-details.js";
 import ShowMoreButtonComponent from "../components/show-more-button";
-// import FilmsListComponent from "../components/films-list";
-// import FilmsSectionComponent from "../components/films-section";
 import MostCommentedComponent from "../components/most-commented";
 import TopRatedComponent from "../components/top-rated.js";
 
@@ -16,7 +14,7 @@ export default class PageController {
   constructor(container) {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-    this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
+    this._showMoreButtonComponent = new ShowMoreButtonComponent();
     this._noFilmsComponent = new NoFilmsComponent();
   }
 
@@ -48,15 +46,14 @@ export default class PageController {
       document.removeEventListener(`keydown`, onEscKeyDown);
     };
     filmCardComponent.setOpenDetailHandler(openFilmDetails);
-
-    render(filmsContainer, filmCardComponent);
+    render(filmsContainer, filmCardComponent.getElement());
   }
 
   _renderShowMoreButton(filmListContainerElement, films) {
     const container = this._container.getElement();
-    render(container, this._ShowMoreButtonComponent);
+    render(container, this._showMoreButtonComponent.getElement());
 
-    this._ShowMoreButtonComponent.setClickHandler(() => {
+    this._showMoreButtonComponent.setClickHandler(() => {
       const prevTasksCount = this._showingFilmsCount;
       this._showingFilmsCount = this._showingFilmsCount + SHOWING_FILMS_COUNT_BY_BUTTON;
 
@@ -73,7 +70,7 @@ export default class PageController {
     const filmListContainerElement = container.querySelector(`.films-list__container`);
 
     if (films.length === 0) {
-      render(container, this._noFilmsComponent);
+      render(container, this._noFilmsComponent.getElement());
     } else {
       this._renderFilms(filmListContainerElement, films.slice(0, this._showingFilmsCount));
       this._renderShowMoreButton(filmListContainerElement, films);
@@ -82,7 +79,7 @@ export default class PageController {
       if (filmTopList.length) {
         const topRatedComponent = new TopRatedComponent();
         const filmsListTopContainerElement = topRatedComponent.getElement().querySelector(`.films-list__container`);
-        render(container, topRatedComponent);
+        render(container, topRatedComponent.getElement());
         this._renderFilms(filmsListTopContainerElement, filmTopList);
       }
 
@@ -90,7 +87,7 @@ export default class PageController {
       if (filmMostList.length) {
         const mostCommentedComponent = new MostCommentedComponent();
         const filmsListMostContainerElement = mostCommentedComponent.getElement().querySelector(`.films-list__container`);
-        render(container, mostCommentedComponent);
+        render(container, mostCommentedComponent.getElement());
         this._renderFilms(filmsListMostContainerElement, filmMostList);
       }
     }
