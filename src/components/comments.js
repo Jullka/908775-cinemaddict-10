@@ -1,27 +1,16 @@
-import {createElement} from '../utils.js';
-import Comment from './comment.js';
+import AbstractComponent from './abstract-component.js';
+import CommentComponent from './comment.js';
 
-export default class Comments {
+export default class CommentsComponent extends AbstractComponent {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {
     let outStr = ``;
     this._film.comments.forEach((item) => {
-      outStr = outStr + new Comment(item).getTemplate();
+      outStr = outStr + new CommentComponent(item).getTemplate();
     });
     return outStr;
   }

@@ -1,33 +1,8 @@
-import {render, createElement} from '../utils.js';
-import {createFilmElement} from "./film.js";
+import AbstractComponent from './abstract-component.js';
 
-const TOP_RATED_FILMS_COUNT = 2;
-
-export default class TopRated {
-  constructor(films) {
-    this._films = films;
-    this._element = null;
-  }
-
-  getTopRated() {
-    return this._films.slice().sort((a, b) => b.rating - a.rating).slice(0, TOP_RATED_FILMS_COUNT);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-      const topRatedFilmsListContainerElement = this._element.querySelector(`.films-list__container`);
-
-      this.getTopRated().forEach((film) => {
-        render(topRatedFilmsListContainerElement, createFilmElement(film));
-      });
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+export default class TopRatedComponent extends AbstractComponent {
+  constructor() {
+    super();
   }
 
   getTemplate() {

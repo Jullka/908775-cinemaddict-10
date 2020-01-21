@@ -1,21 +1,10 @@
-import {createElement, getCheckedParametersCount} from '../utils.js';
+import AbstractComponent from './abstract-component';
+import {getCheckedParametersCount} from '../utils.js';
 
-export default class MainNavigation {
+export default class MainNavigationComponent extends AbstractComponent {
   constructor(films) {
+    super();
     this._films = films;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 
   getTemplate() {
@@ -25,13 +14,7 @@ export default class MainNavigation {
               <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">${getCheckedParametersCount(this._films, `isAlreadyWatched`)}</span></a>
               <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">${getCheckedParametersCount(this._films, `isAddedToFavorites`)}</span></a>
               <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
-            </nav>
-
-            <ul class="sort">
-              <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-              <li><a href="#" class="sort__button">Sort by date</a></li>
-              <li><a href="#" class="sort__button">Sort by rating</a></li>
-            </ul>`;
+            </nav>`;
   }
 }
 
