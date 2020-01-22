@@ -12,7 +12,7 @@ export default class FilmDetailsComponent extends AbstractComponent {
       return (`<span class="film-details__genre">` + item + `</span>`);
     }).join(``);
     this._releaseDate = this.getFullDate(this._film.releaseDate);
-    this._comments = new CommentsComponent(this._film);
+    this._comments = new CommentsComponent(this._film).getTemplate();
   }
 
   getFullDate(date) {
@@ -98,7 +98,7 @@ export default class FilmDetailsComponent extends AbstractComponent {
           <section class="film-details__comments-wrap">
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._film.comments.length}</span></h3>
 
-            <ul class="film-details__comments-list"></ul>
+            <ul class="film-details__comments-list">${this._comments}</ul>
 
             <div class="film-details__new-comment">
               <div for="add-emoji" class="film-details__add-emoji-label"></div>
