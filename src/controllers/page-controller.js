@@ -8,6 +8,7 @@ import TopRatedComponent from "../components/top-rated.js";
 import FilmsSectionComponent from '../components/films-section.js';
 import SortComponent, {SortType} from '../components/sort';
 
+
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const FILM_EXTRA_COUNT = 2;
@@ -17,9 +18,9 @@ export default class PageController {
     this._container = container;
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
     this._showMoreButtonComponent = new ShowMoreButtonComponent();
-    this._noFilmsComponent = new NoFilmsComponent();
+    this._noFilmsComponent = new NoFilmsComponent().getElement();
     this._sortComponent = new SortComponent();
-    this._filmsSectionComponent = new FilmsSectionComponent();
+    this._filmsSectionComponent = new FilmsSectionComponent().getElement();
   }
 
   _renderFilms(filmsContainer, films) {
@@ -58,10 +59,10 @@ export default class PageController {
       return;
     }
 
-    const filmsSectionElement = this._filmsSectionComponent.getElement();
+    const filmsSectionElement = this._filmsSectionComponent;
     const filmsListElement = filmsSectionElement.querySelector(`.films-list`);
     const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
-    render(filmsListElement, this._showMoreButtonComponent);
+    render(filmsListElement, this._showMoreButtonComponent.getElement());
 
     this._showMoreButtonComponent.setClickHandler(() => {
       const prevTasksCount = this._showingFilmsCount;
@@ -81,9 +82,9 @@ export default class PageController {
       return;
     }
 
-    render(this._container, this._sortComponent);
+    render(this._container, this._sortComponent.getElement());
     render(this._container, this._filmsSectionComponent);
-    const filmsElement = this._filmsSectionComponent.getElement();
+    const filmsElement = this._filmsSectionComponent;
     const filmsListContainerElement = filmsElement.querySelector(`.films-list__container`);
 
     this._sortComponent.setClickSortHandler((sortType) => {
@@ -115,7 +116,7 @@ export default class PageController {
     if (TopRatedList.length) {
       const filmsTopRatedComponent = new TopRatedComponent();
       const filmsListTopContainerElement = filmsTopRatedComponent.getElement().querySelector(`.films-list__container`);
-      render(filmsElement, filmsTopRatedComponent);
+      render(filmsElement, filmsTopRatedComponent.getElement());
       this._renderFilms(filmsListTopContainerElement, TopRatedList);
     }
 
@@ -123,7 +124,7 @@ export default class PageController {
     if (MostCommentedList.length) {
       const mostCommentedComponent = new MostCommentedComponent();
       const filmsListMostContainerElement = mostCommentedComponent.getElement().querySelector(`.films-list__container`);
-      render(filmsElement, mostCommentedComponent);
+      render(filmsElement, mostCommentedComponent.getElement());
       this._renderFilms(filmsListMostContainerElement, MostCommentedList);
     }
   }
