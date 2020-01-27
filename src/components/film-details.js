@@ -1,9 +1,10 @@
 import CommentsComponent from './comments.js';
-import AbstractComponent from './abstract-component.js';
+import AbstarctSmartComponent from './abstract-smart-component.js';
+import {getFullDate} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
 
-export default class FilmDetailsComponent extends AbstractComponent {
+export default class FilmDetailsComponent extends AbstarctSmartComponent {
   constructor(film) {
     super();
     this._film = film;
@@ -11,18 +12,32 @@ export default class FilmDetailsComponent extends AbstractComponent {
     this._genres = this._film.genres.map((item) => {
       return (`<span class="film-details__genre">` + item + `</span>`);
     }).join(``);
-    this._releaseDate = this.getFullDate(this._film.releaseDate);
+    this._releaseDate = getFullDate(this._film.releaseDate);
     this._comments = new CommentsComponent(this._film).getTemplate();
-  }
-
-  getFullDate(date) {
-    const MonthItems = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
-    const day = date.getDate() < 10 ? `0` + date.getDate() : date.getDate().toString();
-    return day + ` ` + MonthItems[date.getMonth()] + ` ` + date.getFullYear();
   }
 
   setChecked(isChecked) {
     return isChecked ? `checked` : ``;
+  }
+
+  setCloseClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+  }
+
+  setWatchlistClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
+  }
+
+  setWatchedClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
+  }
+
+  setFavoriteClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
+  }
+
+  recoveryListeners() {
+
   }
 
   getTemplate() {
@@ -93,36 +108,30 @@ export default class FilmDetailsComponent extends AbstractComponent {
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
-
+        <div class="form-details__middle-container">
+        </div>
         <div class="form-details__bottom-container">
           <section class="film-details__comments-wrap">
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._film.comments.length}</span></h3>
-
             <ul class="film-details__comments-list">${this._comments}</ul>
-
             <div class="film-details__new-comment">
               <div for="add-emoji" class="film-details__add-emoji-label"></div>
-
               <label class="film-details__comment-label">
                 <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
               </label>
-
               <div class="film-details__emoji-list">
                 <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
                 <label class="film-details__emoji-label" for="emoji-smile">
                   <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
                 </label>
-
                 <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="neutral-face">
                 <label class="film-details__emoji-label" for="emoji-sleeping">
                   <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
                 </label>
-
                 <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="grinning">
                 <label class="film-details__emoji-label" for="emoji-gpuke">
                   <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
                 </label>
-
                 <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="grinning">
                 <label class="film-details__emoji-label" for="emoji-angry">
                   <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
@@ -133,10 +142,5 @@ export default class FilmDetailsComponent extends AbstractComponent {
         </div>
       </form>
     </section>`;
-  }
-
-  setClickCloseHandler(handler) {
-    const closeButton = this.getElement().querySelector(`.film-details__close-btn`);
-    closeButton.addEventListener(`click`, handler);
   }
 }

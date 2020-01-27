@@ -4,6 +4,7 @@ export default class CommentComponent extends AbstractComponent {
   constructor(comment) {
     super();
     this._comment = comment;
+    this._element = null;
   }
 
   formatDateTime(date) {

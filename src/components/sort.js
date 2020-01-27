@@ -29,22 +29,21 @@ export default class Sort extends AbstractComponent {
         return;
       }
 
-      const sortType = evt.target.dataset.sortType;
-
       if (evt.target.classList.contains(`sort__button--active`)) {
         return;
       }
 
-      document.querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
-      evt.target.classList.add(`sort__button--active`);
-
-      if (this._currentSortType === sortType) {
+      if (this._currentSortType === evt.target.dataset.sortType) {
         return;
       }
 
-      this._currentSortType = sortType;
+      this.getElement().querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
+      evt.target.classList.add(`sort__button--active`);
+
+      this._currentSortType = evt.target.dataset.sortType;
 
       handler(this._currentSortType);
     });
   }
 }
+
