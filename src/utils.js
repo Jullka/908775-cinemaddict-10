@@ -58,18 +58,6 @@ export const replace = (newComponent, oldComponent) => {
   }
 };
 
-// export const formatDate = (date) => {
-//   return moment(date).format(`DD MMMM YYYY`);
-// };
-
-// export const formatDateTime = (date) => {
-//   return moment(date).format(`YYYY/MM/DD hh:mm`);
-// };
-
-// export const randomDate = (start, end) => {
-//   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-// };
-
 export const formatTime = (time) => {
   const duration = moment.duration(time);
 
