@@ -23,21 +23,19 @@ const Users = [
   `Vigorous Stump`
 ];
 
-const getRandomDate = () => {
-  const targetDate = new Date();
-  const diffValue = getRandomIntegerNumber(0, 15);
-
-  targetDate.setDate(targetDate.getDate() - diffValue);
-
-  return targetDate;
+const getRandomCommentDate = () => {
+  const startDate = new Date(2000, 0, 1);
+  const endDate = new Date();
+  return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 };
+
 
 const generateComment = () => {
   return {
     text: getRandomArrayItem(Texts),
     emoji: getRandomArrayItem(Emojies),
     userName: getRandomArrayItem(Users),
-    date: getRandomDate()
+    date: getRandomCommentDate()
   };
 };
 

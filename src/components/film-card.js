@@ -1,4 +1,5 @@
 import AbstractComponent from './abstract-component.js';
+import {formatTime, formatYear} from '../utils.js';
 
 export default class FilmCardComponent extends AbstractComponent {
   constructor(film) {
@@ -11,8 +12,8 @@ export default class FilmCardComponent extends AbstractComponent {
               <h3 class="film-card__title">${this._film.title}</h3>
               <p class="film-card__rating">${this._film.rating}</p>
               <p class="film-card__info">
-                <span class="film-card__year">${this._film.releaseDate.getFullYear().toString()}</span>
-                <span class="film-card__duration">${this._film.duration}</span>
+                <span class="film-card__year">${formatYear(this._film.releaseDate)}</span>
+                <span class="film-card__duration">${formatTime(this._film.duration)}</span>
                 <span class="film-card__genre">${this._film.genres[0]}</span>
               </p>
               <img src="./images/posters/${this._film.poster}" alt="" class="film-card__poster">

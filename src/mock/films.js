@@ -59,11 +59,14 @@ const generateRating = () => {
   return getRandomIntegerNumber(10, 99) / 10.0;
 };
 
-const generateDuration = () => {
-  const fullMinutes = getRandomIntegerNumber(10, 180);
-  const hours = Math.floor(fullMinutes / 60);
-  const minutes = fullMinutes % 60;
-  return `${hours ? hours + `h` : ``} ${minutes}m`;
+const getRandomDuration = () => {
+  return getRandomIntegerNumber(3600000, 18000000);
+};
+
+const getRandomDate = () => {
+  const startDate = new Date(1950, 0, 1);
+  const endDate = new Date();
+  return new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 };
 
 const generateRandomArray = (count, array) => {
@@ -92,8 +95,8 @@ const generateFilm = () => {
     title: filmTitle,
     titleOriginal: filmTitle,
     rating: generateRating(),
-    releaseDate: new Date(getRandomIntegerNumber(1930, 1950), getRandomIntegerNumber(0, 11), getRandomIntegerNumber(1, 28)),
-    duration: generateDuration(),
+    releaseDate: getRandomDate(),
+    duration: getRandomDuration(),
     genres: generateRandomArray(getRandomIntegerNumber(1, 3), Genres),
     poster: getRandomArrayItem(Posters),
     description: generateRandomStringFromArray(5, Descriptions, ` `),

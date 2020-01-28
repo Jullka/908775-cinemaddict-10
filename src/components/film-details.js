@@ -1,6 +1,6 @@
 import CommentsComponent from './comments.js';
 import AbstarctSmartComponent from './abstract-smart-component.js';
-import {getFullDate} from '../utils.js';
+import {formatDate, formatTime} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
 
@@ -12,7 +12,6 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
     this._genres = this._film.genres.map((item) => {
       return (`<span class="film-details__genre">` + item + `</span>`);
     }).join(``);
-    this._releaseDate = getFullDate(this._film.releaseDate);
     this._comments = new CommentsComponent(this._film).getTemplate();
   }
 
@@ -79,11 +78,11 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${this._releaseDate}</td>
+                  <td class="film-details__cell">${formatDate(this._film.releaseDate)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${this._film.duration}</td>
+                  <td class="film-details__cell">${formatTime(this._film.duration)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
