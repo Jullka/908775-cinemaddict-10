@@ -93,7 +93,7 @@ export default class MovieController {
 
     if (film.isAlreadyWatched) {
       const detailsMiddleContainer = this._filmDetailsComponent.getElement().querySelector(`.form-details__middle-container`);
-      this._userRatingComponent = new UserRatingComponent(film);
+      this._userRatingComponent = new UserRatingComponent(film).getElement();
       render(detailsMiddleContainer, this._userRatingComponent);
     }
   }
