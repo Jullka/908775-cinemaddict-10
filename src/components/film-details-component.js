@@ -1,8 +1,21 @@
+import he from "he";
 import CommentsComponent from './comments-component.js';
 import AbstarctSmartComponent from './abstract-smart-component.js';
 import {formatDate, formatTime} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
+
+const parseFormData = (formData) => {
+  const date = new Date().getTime();
+  const comment = he.encode(formData.get(`comment`));
+
+  return {
+    id: String(Date.now() + Math.random()),
+    text: comment,
+    date,
+    emoji: `${formData.get(`comment-emoji`)}.png`
+  };
+};
 
 export default class FilmDetailsComponent extends AbstarctSmartComponent {
   constructor(film) {
@@ -41,6 +54,13 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
 
   recoveryListeners() {
 
+  }
+
+  getData() {
+    const form = this.getElement().querySelector(`form`);
+    const formData = new FormData(form);
+
+    return parseFormData(formData);
   }
 
   getTemplate() {
