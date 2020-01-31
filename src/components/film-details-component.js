@@ -1,4 +1,4 @@
-import CommentsComponent from './comments.js';
+import CommentsComponent from './comments-component.js';
 import AbstarctSmartComponent from './abstract-smart-component.js';
 import {formatDate, formatTime} from '../utils.js';
 
@@ -33,6 +33,10 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
 
   setFavoriteClickHandler(handler) {
     this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
+  }
+
+  setFormSumbitHandler(handler) {
+    handler();
   }
 
   recoveryListeners() {

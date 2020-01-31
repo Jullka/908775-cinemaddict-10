@@ -1,10 +1,6 @@
-import AbstractComponent from './abstract-component';
+import AbstractComponent from './abstract-component.js';
+import {SortType} from '../utils.js';
 
-export const SortType = {
-  DEFAULT: `default`,
-  DATE: `date`,
-  RATING: `rating`
-};
 
 export default class Sort extends AbstractComponent {
   constructor() {

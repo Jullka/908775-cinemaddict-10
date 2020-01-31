@@ -32,6 +32,7 @@ const getRandomCommentDate = () => {
 
 const generateComment = () => {
   return {
+    id: String(Date.now() + Math.random()),
     text: getRandomArrayItem(Texts),
     emoji: getRandomArrayItem(Emojies),
     userName: getRandomArrayItem(Users),

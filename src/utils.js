@@ -5,6 +5,19 @@ export const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};
+
+export const FilterType = {
+  ALL: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+};
+
 export const getCheckedParametersCount = (films, parametr) => {
   let count = 0;
   films.forEach((item) => {
@@ -58,6 +71,10 @@ export const replace = (newComponent, oldComponent) => {
   }
 };
 
+export const isSubmitPressed = (evt) => {
+  return evt.ctrlKey && (evt.key === `Enter` || evt.key === `Ent`);
+};
+
 export const formatTime = (time) => {
   const duration = moment.duration(time);
 
@@ -74,5 +91,25 @@ export const formatDate = (date) => {
 
 export const formatCommentDate = (date) => {
   return moment(date).format(`DD/MM/YYYY, HH:MM`);
+};
+
+const getWatchlistMovies = (films) => films.filter((film) => film.isAddedToWatchlist);
+
+const getHistoryMovies = (films) => films.filter((film) => film.isAlreadyWatched);
+
+const getFavoriteMovies = (films) => films.filter((film) => film.isAddedToFavorites);
+
+export const getFilmsByFilter = (films, filterType) => {
+  switch (filterType) {
+    case FilterType.WATCHLIST:
+      return getWatchlistMovies(films);
+    case FilterType.HISTORY:
+      return getHistoryMovies(films);
+    case FilterType.FAVORITES:
+      return getFavoriteMovies(films);
+    case FilterType.ALL:
+    default:
+      return films;
+  }
 };
 
