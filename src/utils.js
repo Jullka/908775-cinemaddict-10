@@ -93,20 +93,20 @@ export const formatCommentDate = (date) => {
   return moment(date).format(`DD/MM/YYYY, HH:MM`);
 };
 
-const getWatchlistMovies = (films) => films.filter((film) => film.isAddedToWatchlist);
+const getWatchlistFilms = (films) => films.filter((film) => film.isAddedToWatchlist);
 
-const getHistoryMovies = (films) => films.filter((film) => film.isAlreadyWatched);
+const getHistoryFilms = (films) => films.filter((film) => film.isAlreadyWatched);
 
-const getFavoriteMovies = (films) => films.filter((film) => film.isAddedToFavorites);
+const getFavoriteFilms = (films) => films.filter((film) => film.isAddedToFavorites);
 
 export const getFilmsByFilter = (films, filterType) => {
   switch (filterType) {
     case FilterType.WATCHLIST:
-      return getWatchlistMovies(films);
+      return getWatchlistFilms(films);
     case FilterType.HISTORY:
-      return getHistoryMovies(films);
+      return getHistoryFilms(films);
     case FilterType.FAVORITES:
-      return getFavoriteMovies(films);
+      return getFavoriteFilms(films);
     case FilterType.ALL:
     default:
       return films;

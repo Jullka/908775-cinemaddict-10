@@ -151,7 +151,7 @@ export default class MovieController {
   }
 
   _renderComments(comments) {
-    this._detailsBottomElement = this._filmDetailsCComponent.getElement().querySelector(`.form-details__bottom-container`);
+    this._detailsBottomElement = this._filmDetailsComponent.getElement().querySelector(`.form-details__bottom-container`);
     this._commentsComponent = new CommentsComponent();
 
     this._commentsComponent.setClickEmojiHandler();

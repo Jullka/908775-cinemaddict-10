@@ -1,63 +1,78 @@
 import AbstractComponent from './abstract-component.js';
 // import {getCheckedParametersCount} from '../utils/common.js';
-import {FilterType} from '../utils.js';
+
+const ACTIVE_CLASS = `main-navigation__item--active`;
+
+export const MainNavigationItems = {
+  ALL: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+  STATS: `stats`
+};
+
+const getCurrentItem = (href) => {
+  return href.split(`#`)[1];
+};
+
+const createMainNavigationMarkup = (item, {isChecked, isLast}) => {
+  const {name, code, count} = item;
+
+  const checkedClass = isChecked ? `main-navigation__item--active` : ``;
+  const lastClass = isLast ? `main-navigation__item--additional` : ``;
+  const countMarkup = count ? `<span class="main-navigation__item-count">${count}</span>` : ``;
+  return (
+    `<a href="#${code}" class="main-navigation__item ${checkedClass} ${lastClass}">${name} ${countMarkup}</a>`
+  );
+};
+const createMainNavigationTemplate = (mainNavigationItems) => {
+  const mainNavigationMarkup = mainNavigationItems.map((item, i) => createMainNavigationMarkup(item, {isChecked: i === 0, isLast: i === mainNavigationItems.length - 1})).join(`\n`);
+  return (
+    `<nav class="main-navigation">
+      ${mainNavigationMarkup}
+    </nav>`
+  );
+};
 
 export default class MainNavigationComponent extends AbstractComponent {
-  constructor() {
+  constructor(mainNavigationItems) {
     super();
-    this._currentFilterType = FilterType.ALL;
+    this._mainNavigationItems = mainNavigationItems;
+  }
+  getTemplate() {
+    return createMainNavigationTemplate(this._mainNavigationItems);
   }
 
-  set watchlistCount(count) {
-    this.getElement().querySelector(`.watchlist-count`).textContent = count.toString();
-  }
+  setFilterChangeHandler(handler) {
+    this.getElement().addEventListener(`click`, (evt) => {
+      const filterName = evt.target.href.split(`#`)[1];
+      if (!filterName) {
+        return;
+      }
 
-  set historyCount(count) {
-    this.getElement().querySelector(`.history-count`).textContent = count.toString();
-  }
-
-  set favoritesCount(count) {
-    this.getElement().querySelector(`.favorites-count`).textContent = count.toString();
-  }
-
-  setFilterTypeChangeHandler(handler) {
-    const listItems = this.getElement().querySelectorAll(`.main-navigation__item`);
-    listItems.forEach((item) => {
-      item.addEventListener(`click`, (evt) => {
-        evt.preventDefault();
-
-        const filterType = evt.target.dataset.filterType;
-
-        if (this._currentFilterType === filterType) {
-          return;
-        }
-
-        this._currentFilterType = filterType;
-        listItems.forEach((elem) => {
-          if (!elem.classList.contains(`main-navigation__item--additional`)) {
-            const attr = elem.getAttribute(`data-filter-type`);
-            if (attr.includes(this._currentFilterType)) {
-              elem.classList.add(`main-navigation__item--active`);
-            } else {
-              elem.classList.remove(`main-navigation__item--active`);
-            }
-          }
-        });
-
-        handler(this._currentFilterType);
-      });
+      handler(filterName);
     });
   }
 
-  _getTemplate() {
-    return (
-      `<nav class="main-navigation">
-        <a href="#all" data-filter-type="${FilterType.ALL}" class="main-navigation__item main-navigation__item--active">All movies</a>
-        <a href="#watchlist" data-filter-type="${FilterType.WATCHLIST}" class="main-navigation__item">Watchlist <span class="main-navigation__item-count watchlist-count"></span></a>
-        <a href="#history" data-filter-type="${FilterType.HISTORY}" class="main-navigation__item">History <span class="main-navigation__item-count history-count"></span></a>
-        <a href="#favorites" data-filter-type="${FilterType.FAVORITES}" class="main-navigation__item">Favorites <span class="main-navigation__item-count favorites-count"></span></a>
-        <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
-    </nav>`
-    );
+  setActiveMainNavigation(mainNavigationItem) {
+    const mainNavigationItems = this.getElement().querySelectorAll(`.main-navigation__item`);
+    mainNavigationItems.forEach((item) => {
+      item.classList.remove(ACTIVE_CLASS);
+      if (getCurrentItem(item.href) === mainNavigationItem) {
+        item.classList.add(ACTIVE_CLASS);
+      }
+    });
+  }
+
+  setOnChange(handler) {
+    this.getElement().addEventListener(`click`, (evt) => {
+      const mainNavigationItem = getCurrentItem(evt.target.href);
+
+      if (!mainNavigationItem) {
+        return;
+      }
+
+      handler(mainNavigationItem);
+    });
   }
 }

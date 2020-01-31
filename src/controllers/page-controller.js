@@ -36,8 +36,16 @@ export default class PageController {
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
 
-    this.filmsModel.setFilterChangeHandler(this._onFilterChange);
+    // this._filmsModel.setFilterChangeHandler(this._onFilterChange);
     this._sortComponent.setClickSortHandler(this._onSortTypeChange);
+  }
+
+  hide() {
+    this._container.hide();
+  }
+
+  show() {
+    this._container.show();
   }
 
   _onFilterChange() {
@@ -121,7 +129,7 @@ export default class PageController {
 
     render(this._container, this._sortComponent.getElement());
     render(this._container, this._filmsSectionComponent);
-    this._filmsSectionElement = this._filmsComponent.getElement();
+    this._filmsSectionElement = this._filmsSectionComponent;
     this._filmsListContainer = this._filmsSectionElement.querySelector(`.films-list__container`);
 
     this._renderFilms(this._filmsListContainer, this._films.slice(0, this._showingFilmsCount));

@@ -1,6 +1,6 @@
 import he from "he";
 import CommentsComponent from './comments-component.js';
-import AbstarctSmartComponent from './abstract-smart-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 import {formatDate, formatTime} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
@@ -17,7 +17,7 @@ const parseFormData = (formData) => {
   };
 };
 
-export default class FilmDetailsComponent extends AbstarctSmartComponent {
+export default class FilmDetailsComponent extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
