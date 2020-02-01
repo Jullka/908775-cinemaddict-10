@@ -9,11 +9,11 @@ const MainNavigationItems = [
 const getMainNavigationCountItems = (title, films) => {
   switch (title) {
     case `Watchlist`:
-      return films.filter((film) => film.isNeedWatch).length;
+      return films.filter((film) => film.isAddedToWatchlist).length;
     case `History`:
-      return films.filter((film) => film.isWatch).length;
+      return films.filter((film) => film.isAlreadyWatched).length;
     case `Favorites`:
-      return films.filter((film) => film.isFavorite).length;
+      return films.filter((film) => film.isAddedToFavorites).length;
     default:
       return 0;
   }
