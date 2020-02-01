@@ -1,11 +1,5 @@
 import AbstractComponent from './abstract-component.js';
 
-const createCountCommentsTemplate = (countComments) => {
-  return (
-    `<h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${countComments}</span></h3>`
-  );
-};
-
 export default class CountCommentsComponent extends AbstractComponent {
   constructor(countComments) {
     super();
@@ -14,6 +8,6 @@ export default class CountCommentsComponent extends AbstractComponent {
   }
 
   getTemplate() {
-    return createCountCommentsTemplate(this._countComments);
+    return `<h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._countComments}</span></h3>`;
   }
 }

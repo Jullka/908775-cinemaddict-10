@@ -1,5 +1,4 @@
 import AbstractComponent from './abstract-component.js';
-// import {getCheckedParametersCount} from '../utils/common.js';
 
 const ACTIVE_CLASS = `main-navigation__item--active`;
 

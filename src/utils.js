@@ -113,3 +113,55 @@ export const getFilmsByFilter = (films, filterType) => {
   }
 };
 
+export const StatisticType = {
+  ALL: `all-time`,
+  TODAY: `today`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`
+};
+
+export const StatisticPeriod = {
+  [StatisticType.TODAY]: `days`,
+  [StatisticType.WEEK]: `week`,
+  [StatisticType.MONTH]: `month`,
+  [StatisticType.YEAR]: `year`
+};
+
+const Rank = {
+  NONE: `-`,
+  NOVICE: `novice`,
+  FAN: `fan`,
+  MOVIE_BUFF: `movie buff`
+};
+
+export const getRank = (films) => {
+  let rank = ``;
+  const countView = films.filter((film) => film.isAlreadyWatched).length;
+  if (countView === 0) {
+    rank = Rank.NONE;
+  } else if (countView >= 1 && countView <= 10) {
+    rank = Rank.NOVICE;
+  } else if (countView >= 11 && countView <= 20) {
+    rank = Rank.FAN;
+  } else {
+    rank = Rank.MOVIE_BUFF;
+  }
+
+  return rank;
+};
+
+export const getFilmsByPeriod = (films, period) => {
+  const watchedMovies = films.filter((film) => film.isWatch);
+
+  if (period === StatisticType.ALL) {
+    return watchedMovies;
+  }
+
+  return watchedMovies.filter((film) => {
+    return moment(film.dateWatched).diff(new Date(), StatisticPeriod[period]) === 0;
+  });
+};
+
+export const USER = `User`;
+

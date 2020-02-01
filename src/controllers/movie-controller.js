@@ -88,6 +88,7 @@ export default class MovieController {
     this._filmCardComponent.setFavoriteClickHandler((evt) => {
       evt.preventDefault();
       this._onDataChange(this, this._filmCardComponent._film, Object.assign({}, this._filmCardComponent._film, {
+        dateWatched: (film.dateWatched ? null : new Date()),
         isAddedToFavorites: !film.isAddedToFavorites
       }));
     });

@@ -8,6 +8,7 @@ export default class FilterController {
     this._filmsModel = filmsModel;
     this._activeFilterType = FilterType.ALL;
     this._MainNavigationComponent = null;
+    this._handlerOnMenuChange = null;
 
     this._onFilterChange = this._onFilterChange.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
