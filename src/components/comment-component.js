@@ -7,7 +7,7 @@ export default class CommentComponent extends AbstractComponent {
     this._comment = comment;
     this._date = formatCommentDate(comment.date);
     this._text = comment.text;
-    this._user = comment.user;
+    this._user = comment.userName;
     this._emoji = comment.emoji;
   }
   getTemplate() {

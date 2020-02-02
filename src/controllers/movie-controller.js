@@ -160,7 +160,7 @@ export default class MovieController {
     const commentsWrapElement = this._commentsComponent.getElement();
     this._countCommentsComponent = new CountCommentsComponent(comments.length);
 
-    render(this._detailsBottomElement, this._commentsComponent);
+    render(this._detailsBottomElement, this._commentsComponent.getElement());
     render(commentsWrapElement, this._countCommentsComponent, RenderPosition.AFTERBEGIN);
 
     const commentListElement = this._commentsComponent.getElement().querySelector(`.film-details__comments-list`);

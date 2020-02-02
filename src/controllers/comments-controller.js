@@ -13,7 +13,7 @@ export default class CommentController {
   render(comment) {
     this._commentComponent = new CommentComponent(comment);
 
-    render(this._container, this._commentComponent);
+    render(this._container, this._commentComponent.getElement());
 
     this._commentComponent.setDeleteClickHandler((evt) => {
       evt.preventDefault();
