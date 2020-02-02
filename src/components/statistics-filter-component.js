@@ -1,4 +1,4 @@
-import AbstractComponent from "./abstract-component.js";
+import AbstractComponent from './abstract-component.js';
 
 const STATISTICS_FILTERS = [`All time`, `Today`, `Week`, `Month`, `Year`];
 

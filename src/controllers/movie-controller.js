@@ -5,7 +5,7 @@ import CommentsComponent from '../components/comments-component.js';
 import CountCommentsComponent from '../components/count-comments-component.js';
 import CommentController from '../controllers/comments-controller.js';
 import CommentsModel from '../models/comments-model.js';
-import {render, remove, replace, RenderPosition, isSubmitPressed} from '../utils.js';
+import {RenderPosition, isSubmitPressed, render, remove, replace} from '../utils.js';
 
 const Mode = {
   DEFAULT: `default`,

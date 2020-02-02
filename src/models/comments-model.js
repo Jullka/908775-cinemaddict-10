@@ -1,4 +1,4 @@
-import {USER} from "../utils.js";
+import {USER} from '../utils.js';
 
 export default class Comments {
   constructor() {

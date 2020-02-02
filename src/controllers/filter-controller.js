@@ -1,5 +1,5 @@
-import {FilterType, render, replace} from '../utils.js';
 import MainNavigationComponent from '../components/main-navigation-component.js';
+import {FilterType, render, replace} from '../utils.js';
 import {generateMainNavigation} from '../mocks/main-navigation-mock.js';
 
 export default class FilterController {
@@ -20,13 +20,13 @@ export default class FilterController {
     const oldComponent = this._mainNavigationComponent;
     const films = this._filmsModel.getFilms();
     const mainNavigationItems = generateMainNavigation(films);
-    this._mainNavigationComponent = new MainNavigationComponent(mainNavigationItems).getElement();
+    this._mainNavigationComponent = new MainNavigationComponent(mainNavigationItems);
     this._recoveryListeners();
 
     if (oldComponent) {
       replace(this._mainNavigationComponent, oldComponent);
     } else {
-      render(this._container, this._mainNavigationComponent);
+      render(this._container, this._mainNavigationComponent.getElement());
     }
   }
 

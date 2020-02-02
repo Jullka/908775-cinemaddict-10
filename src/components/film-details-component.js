@@ -1,4 +1,4 @@
-import he from "he";
+import he from 'he';
 import CommentsComponent from './comments-component.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {formatDate, formatTime} from '../utils.js';

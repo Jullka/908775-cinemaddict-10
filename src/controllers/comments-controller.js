@@ -1,4 +1,4 @@
-import CommentComponent from "../components/comment-component.js";
+import CommentComponent from '../components/comment-component.js';
 import {render, remove} from '../utils.js';
 
 export default class CommentController {

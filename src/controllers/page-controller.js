@@ -1,4 +1,3 @@
-import {SortType, render, remove} from '../utils.js';
 import NoFilmsComponent from '../components/no-films-component.js';
 import ShowMoreButtonComponent from '../components/show-more-button-component';
 import MostCommentedComponent from '../components/most-commented-component';
@@ -6,6 +5,7 @@ import TopRatedComponent from '../components/top-rated-component.js';
 import FilmsSectionComponent from '../components/films-section-component.js';
 import SortComponent from '../components/sort-component.js';
 import MovieController from '../controllers/movie-controller.js';
+import {SortType, render, remove} from '../utils.js';
 
 
 const SHOWING_FILMS_COUNT_ON_START = 5;
@@ -36,7 +36,7 @@ export default class PageController {
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
     this._onSortTypeChange = this._onSortTypeChange.bind(this);
 
-    // this._filmsModel.setFilterChangeHandler(this._onFilterChange);
+    this._filmsModel.setFilterChangeHandler(this._onFilterChange);
     this._sortComponent.setClickSortHandler(this._onSortTypeChange);
   }
 
@@ -62,7 +62,7 @@ export default class PageController {
 
     this._renderFilms(this._filmsListContainer, films);
     this._renderTopRatedList();
-    this._rendermostCommentedList();
+    this._renderMostCommentedList();
 
     this._renderShowMoreButton();
   }
@@ -168,7 +168,7 @@ export default class PageController {
       return;
     }
 
-    render(this._filmsSectionElement, this._topRatedComponent);
+    render(this._filmsSectionElement, this._topRatedComponent.getElement());
     const filmsListTopRatedContainer = this._topRatedComponent.getElement().querySelector(`.films-list__container`);
     this._renderFilms(filmsListTopRatedContainer, TopRatedList);
   }
@@ -180,7 +180,7 @@ export default class PageController {
       return;
     }
 
-    render(this._filmsSectionElement, this._mostCommentedComponent);
+    render(this._filmsSectionElement, this._mostCommentedComponent.getElement());
     const filmsListMostCommentedContainer = this._mostCommentedComponent.getElement().querySelector(`.films-list__container`);
     this._renderFilms(filmsListMostCommentedContainer, mostCommentedList);
   }

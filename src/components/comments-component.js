@@ -1,5 +1,5 @@
 import AbstractComponent from './abstract-component.js';
-import {createElement} from "../utils.js";
+import {createElement} from '../utils.js';
 
 const Emoji = {
   WIDTH: `55`,
