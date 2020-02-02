@@ -20,7 +20,7 @@ export default class StatisticsController {
 
   render() {
     const oldStatisticsComponent = this._statisticsComponent;
-    const films = this._filmModel.getMovies();
+    const films = this._filmModel.getFilms();
     const filmIsWatching = getFilmsByPeriod(films, this._activeFilterType);
     this._rank = getRank(films);
 

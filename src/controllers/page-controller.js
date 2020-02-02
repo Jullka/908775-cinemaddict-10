@@ -168,7 +168,7 @@ export default class PageController {
       return;
     }
 
-    render(this._filmsSectionElement, this._TopRatedComponent);
+    render(this._filmsSectionElement, this._topRatedComponent);
     const filmsListTopRatedContainer = this._topRatedComponent.getElement().querySelector(`.films-list__container`);
     this._renderFilms(filmsListTopRatedContainer, TopRatedList);
   }
@@ -181,7 +181,7 @@ export default class PageController {
     }
 
     render(this._filmsSectionElement, this._mostCommentedComponent);
-    const filmsListMostCommentedContainer = this._filmsMostCommentedComponent.getElement().querySelector(`.films-list__container`);
+    const filmsListMostCommentedContainer = this._mostCommentedComponent.getElement().querySelector(`.films-list__container`);
     this._renderFilms(filmsListMostCommentedContainer, mostCommentedList);
   }
 

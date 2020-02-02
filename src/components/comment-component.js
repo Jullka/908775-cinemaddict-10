@@ -9,7 +9,8 @@ export default class CommentComponent extends AbstractComponent {
     this._text = comment.text;
     this._user = comment.user;
     this._emoji = comment.emoji;
-
+  }
+  getTemplate() {
     return `<li class="film-details__comment">
               <span class="film-details__comment-emoji">
                 <img src="./images/emoji/${this._emoji}" width="55" height="55" alt="emoji">

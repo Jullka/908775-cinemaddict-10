@@ -30,7 +30,7 @@ filterController.render();
 const pageController = new PageController(siteMainElement, filmsModel);
 pageController.render();
 
-const statisticsComponent = new StatisticsComponent().getElement();
+const statisticsComponent = new StatisticsComponent(siteMainElement, filmsModel).getElement();
 render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 
 const footerStatistics = siteFooterElement.querySelector(`.footer__statistics`);

@@ -20,7 +20,7 @@ export default class FilterController {
     const oldComponent = this._mainNavigationComponent;
     const films = this._filmsModel.getFilms();
     const mainNavigationItems = generateMainNavigation(films);
-    this._mainNavigationComponent = new MainNavigationComponent(mainNavigationItems);
+    this._mainNavigationComponent = new MainNavigationComponent(mainNavigationItems).getElement();
     this._recoveryListeners();
 
     if (oldComponent) {
