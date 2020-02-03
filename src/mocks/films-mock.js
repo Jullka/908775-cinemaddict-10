@@ -1,5 +1,5 @@
 import {getRandomIntegerNumber, getRandomArrayItem} from '../utils.js';
-import {generateComments} from './comment.js';
+import {generateComments} from './comment-mock.js';
 
 const Titles = [
   `Back to the Future`,
@@ -92,6 +92,7 @@ const generateRandomCheck = () => {
 const generateFilm = () => {
   const filmTitle = getRandomArrayItem(Titles);
   return {
+    id: String(new Date() + Math.random()),
     title: filmTitle,
     titleOriginal: filmTitle,
     rating: generateRating(),

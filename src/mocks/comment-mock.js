@@ -8,11 +8,11 @@ const Texts = [
 ];
 
 const Emojies = [
-  `./images/emoji/trophy.png`,
-  `./images/emoji/smile.png`,
-  `./images/emoji/sleeping.png`,
-  `./images/emoji/puke.png`,
-  `./images/emoji/angry.png`
+  `trophy.png`,
+  `smile.png`,
+  `sleeping.png`,
+  `puke.png`,
+  `angry.png`
 ];
 
 const Users = [
@@ -32,6 +32,7 @@ const getRandomCommentDate = () => {
 
 const generateComment = () => {
   return {
+    id: String(Date.now() + Math.random()),
     text: getRandomArrayItem(Texts),
     emoji: getRandomArrayItem(Emojies),
     userName: getRandomArrayItem(Users),

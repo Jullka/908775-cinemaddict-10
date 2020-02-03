@@ -1,10 +1,23 @@
-import CommentsComponent from './comments.js';
-import AbstarctSmartComponent from './abstract-smart-component.js';
+import he from 'he';
+import CommentsComponent from './comments-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 import {formatDate, formatTime} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
 
-export default class FilmDetailsComponent extends AbstarctSmartComponent {
+const parseFormData = (formData) => {
+  const date = new Date().getTime();
+  const comment = he.encode(formData.get(`comment`));
+
+  return {
+    id: String(Date.now() + Math.random()),
+    text: comment,
+    date,
+    emoji: `${formData.get(`comment-emoji`)}.png`
+  };
+};
+
+export default class FilmDetailsComponent extends AbstractSmartComponent {
   constructor(film) {
     super();
     this._film = film;
@@ -35,8 +48,19 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
     this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
   }
 
+  setFormSumbitHandler(handler) {
+    handler();
+  }
+
   recoveryListeners() {
 
+  }
+
+  getData() {
+    const form = this.getElement().querySelector(`form`);
+    const formData = new FormData(form);
+
+    return parseFormData(formData);
   }
 
   getTemplate() {
@@ -110,34 +134,6 @@ export default class FilmDetailsComponent extends AbstarctSmartComponent {
         <div class="form-details__middle-container">
         </div>
         <div class="form-details__bottom-container">
-          <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._film.comments.length}</span></h3>
-            <ul class="film-details__comments-list">${this._comments}</ul>
-            <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
-              <label class="film-details__comment-label">
-                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
-              </label>
-              <div class="film-details__emoji-list">
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
-                <label class="film-details__emoji-label" for="emoji-smile">
-                  <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
-                </label>
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="neutral-face">
-                <label class="film-details__emoji-label" for="emoji-sleeping">
-                  <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
-                </label>
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-gpuke" value="grinning">
-                <label class="film-details__emoji-label" for="emoji-gpuke">
-                  <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
-                </label>
-                <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="grinning">
-                <label class="film-details__emoji-label" for="emoji-angry">
-                  <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
-                </label>
-              </div>
-            </div>
-          </section>
         </div>
       </form>
     </section>`;
