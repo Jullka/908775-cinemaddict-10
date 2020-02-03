@@ -1,6 +1,6 @@
 import MainNavigationComponent from '../components/main-navigation-component.js';
 import {FilterType, render, replace} from '../utils.js';
-import {generateMainNavigation} from '../mocks/main-navigation-mock.js';
+import {generateMainNavigation} from '../utils/main-navigation-utils.js';
 
 export default class FilterController {
   constructor(container, filmsModel) {

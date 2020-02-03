@@ -13,11 +13,13 @@ const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 const FILM_EXTRA_COUNT = 2;
 
 export default class PageController {
-  constructor(container, filmsModel) {
+  constructor(container, filmsModel, api) {
     this._container = container;
     this._filmsModel = filmsModel;
+    this._api = api;
     this._filmsListContainer = null;
     this._filmsSectionElement = null;
+
     this._showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
 
     this._films = [];
@@ -74,9 +76,12 @@ export default class PageController {
 
   _onDataChange(oldData, newData) {
     if (newData !== null) {
-      this._filmsModel.updateFilms(oldData.id, newData);
+      this._api.updateFilms(oldData.id, newData)
+        .then((filmsModel) => {
+          this._filmsModel.updateFilms(oldData.id, filmsModel);
+          this._updateFilms(this._showingFilmsCount);
+        });
     }
-    this._updateFilms(this._showingFilmsCount);
   }
 
   _onViewChange() {
@@ -85,7 +90,7 @@ export default class PageController {
 
   _renderFilms(filmsContainer, films) {
     const newFilms = films.map((film) => {
-      const movieController = new MovieController(filmsContainer, this._onDataChange, this._onViewChange, this._filmsModel);
+      const movieController = new MovieController(filmsContainer, this._onDataChange, this._onViewChange, this._filmsModel, this._api);
       movieController.render(film);
       return movieController;
     });

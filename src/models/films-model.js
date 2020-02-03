@@ -1,6 +1,6 @@
 import {getFilmsByFilter, FilterType} from '../utils.js';
 
-export default class FilmsModels {
+export default class FilmsModel {
   constructor() {
     this._films = [];
     this._activeFilterType = FilterType.ALL;
