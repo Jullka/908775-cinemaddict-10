@@ -161,7 +161,7 @@ export default class MovieController {
     this._countCommentsComponent = new CountCommentsComponent(comments.length);
 
     render(this._detailsBottomElement, this._commentsComponent.getElement());
-    render(commentsWrapElement, this._countCommentsComponent, RenderPosition.AFTERBEGIN);
+    render(commentsWrapElement, this._countCommentsComponent.getElement(), RenderPosition.AFTERBEGIN);
 
     const commentListElement = this._commentsComponent.getElement().querySelector(`.film-details__comments-list`);
     const newComment = comments.map((comment) => {

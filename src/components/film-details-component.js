@@ -134,9 +134,6 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
         <div class="form-details__middle-container">
         </div>
         <div class="form-details__bottom-container">
-          <section class="film-details__comments-wrap">
-            <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._film.comments.length}</span></h3>
-            <ul class="film-details__comments-list">${this._comments}</ul>
         </div>
       </form>
     </section>`;

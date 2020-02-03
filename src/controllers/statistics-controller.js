@@ -5,9 +5,9 @@ import {render, replace, RenderPosition} from '../utils.js';
 import {StatisticType, getRank, getFilmsByPeriod} from '../utils.js';
 
 export default class StatisticsController {
-  constructor(container, filmModel) {
+  constructor(container, filmsModel) {
     this._container = container;
-    this._filmModel = filmModel;
+    this._filmsModel = filmsModel;
     this._rank = null;
     this._activeFilterType = StatisticType.ALL;
 
@@ -20,7 +20,7 @@ export default class StatisticsController {
 
   render() {
     const oldStatisticsComponent = this._statisticsComponent;
-    const films = this._filmModel.getFilms();
+    const films = this._filmsModel.getFilms();
     const filmIsWatching = getFilmsByPeriod(films, this._activeFilterType);
     this._rank = getRank(films);
 
