@@ -1,4 +1,4 @@
-import FilmsModel from './models/films-model.js';
+import FilmModel from './models/film-model.js';
 
 const Method = {
   GET: `GET`,
@@ -29,13 +29,13 @@ export default class API {
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())
-      .then(FilmsModel.parseMovie);
+      .then(FilmModel.parseFilms);
   }
 
   getFilms() {
     return this._load({url: `movies`})
       .then((response) => response.json())
-      .then(FilmsModel.parseFilms);
+      .then(FilmModel.parseFilms);
   }
 
   getComments(filmId) {

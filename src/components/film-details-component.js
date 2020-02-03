@@ -73,7 +73,7 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
               <img class="film-details__poster-img" src="${this._film.poster}" alt="">
-              <p class="film-details__age">${this._film.age.toString()}</p>
+              <p class="film-details__age">${this._film.ratingPlus}</p>
             </div>
             <div class="film-details__info">
               <div class="film-details__info-head">

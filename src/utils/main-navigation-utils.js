@@ -24,7 +24,7 @@ export const generateMainNavigation = (films) => {
     return {
       name: item.name,
       code: item.code,
-      count: getMainNavigationCountItems(item.name, films),
+      count: getMainNavigationCountItems(item.name, films)
     };
   });
 };

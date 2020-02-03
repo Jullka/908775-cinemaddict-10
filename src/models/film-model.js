@@ -1,4 +1,4 @@
-import {getYear, getDuration} from '../utils/movie.js';
+import {getYear, getDuration} from '../utils/film-utils.js';
 
 export default class FilmModel {
   constructor(data) {
@@ -65,7 +65,7 @@ export default class FilmModel {
   }
 
   static parseFilms(data) {
-    return data.map(FilmModel.parseMovie);
+    return data.map(FilmModel.parseFilm);
   }
 
   static clone(data) {
