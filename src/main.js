@@ -47,7 +47,7 @@ api.getFilms()
     });
 
     const rank = getRank(films);
-    render(siteHeaderElement, new ProfileRatingComponent(rank));
+    render(siteHeaderElement, new ProfileRatingComponent(rank).getElement());
 
     const footerStatisticComponent = new FooterStatisticComponent(films.length);
     render(document.querySelector(`.footer__statistics`), footerStatisticComponent);

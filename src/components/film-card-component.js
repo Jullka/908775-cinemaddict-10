@@ -1,13 +1,13 @@
 import AbstractComponent from './abstract-component.js';
-import {formatTime, formatYear} from '../utils.js';
+import {formatYear} from '../utils.js';
 
-const MAX_DESCRIPTION_LENGTH = 139;
+const MAX_DESCRIPTION_LENGTH = 140;
 
 export default class FilmCardComponent extends AbstractComponent {
   constructor(film) {
     super();
     this._film = film;
-    this._description = this._film.description.length > MAX_DESCRIPTION_LENGTH ? this._film.description.slice(0, MAX_DESCRIPTION_LENGTH) + `...` : this._film.description;
+    this._description = this._film.description.length > MAX_DESCRIPTION_LENGTH ? this._film.description.slice(0, MAX_DESCRIPTION_LENGTH - 1) + `...` : this._film.description;
   }
 
   getTemplate() {
@@ -16,7 +16,7 @@ export default class FilmCardComponent extends AbstractComponent {
               <p class="film-card__rating">${this._film.rating}</p>
               <p class="film-card__info">
                 <span class="film-card__year">${formatYear(this._film.releaseDate)}</span>
-                <span class="film-card__duration">${formatTime(this._film.duration)}</span>
+                <span class="film-card__duration">${this._film.duration}</span>
                 <span class="film-card__genre">${this._film.genres}</span>
               </p>
               <img src="${this._film.poster}" alt="" class="film-card__poster">

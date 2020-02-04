@@ -18,6 +18,8 @@ export const FilterType = {
   FAVORITES: `favorites`,
 };
 
+export const SHAKE_ANIMATION_TIMEOUT = 600;
+
 export const getCheckedParametersCount = (films, parametr) => {
   let count = 0;
   films.forEach((item) => {

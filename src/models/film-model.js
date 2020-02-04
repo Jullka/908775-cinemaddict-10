@@ -22,7 +22,7 @@ export default class FilmModel {
     this.ratingPlus = data[`film_info`][`age_rating`] || 0;
     this.runtime = data[`film_info`][`runtime`] || 0;
     this.personalRating = data[`user_details`][`personal_rating`] || 0;
-    this.dateWatched = data[`user_details`][`watching_date`] ? new Date(data[`user_details`][`watching_date`]) : null;
+    this.dateWatched = data[`user_details`][`watching_date`] ? new Date(data[`user_details`][`watching_date`]) : new Date();
     this.isAddedToWatchlist = data[`user_details`][`watchlist`] ? data[`user_details`][`watchlist`] : false;
     this.isAlreadyWatched = data[`user_details`][`already_watched`] ? data[`user_details`][`already_watched`] : false;
     this.isAddedToFavorites = data[`user_details`][`favorite`] ? data[`user_details`][`favorite`] : false;

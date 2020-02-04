@@ -32,7 +32,6 @@ export default class PageController {
     this._topRatedComponent = new TopRatedComponent();
     this._mostCommentedComponent = new MostCommentedComponent();
 
-    this._onDataChange = this._onDataChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
     this._onFilterChange = this._onFilterChange.bind(this);
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
@@ -74,13 +73,44 @@ export default class PageController {
     this._showedFilmControllers = [];
   }
 
-  _onDataChange(oldData, newData) {
-    if (newData !== null) {
-      this._api.updateFilms(oldData.id, newData)
+  onDataChange(controller, oldData, newData, type = `movie`) {
+    switch (type) {
+      case `comment`:
+        this._api.addComment(oldData.id, newData)
         .then((filmsModel) => {
-          this._filmsModel.updateFilms(oldData.id, filmsModel);
-          this._updateFilms(this._showingFilmsCount);
+          controller._commentsComponent.activateForm();
+          const commet = filmsModel.comments.pop();
+          controller._commentsModel.addComment(commet);
+          controller._updateComments();
+        })
+        .catch(() => {
+          controller._commentsComponent.setErrorTextArea();
+          const newCommentForm = controller._commentsComponent.getElement().querySelector(`.film-details__new-comment`);
+          controller.shake(newCommentForm);
         });
+        break;
+      case `rating`:
+        this._api.updateFilm(oldData.id, newData)
+          .then((filmsModel) => {
+            controller._userRatingComponent.removeErrorInputs();
+            this._filmsModel.updateFilm(oldData.id, filmsModel);
+          })
+          .catch(() => {
+            controller._userRatingComponent.setErrorInput();
+            const userRatingFormElement = controller._userRatingComponent.getElement().querySelector(`.film-details__user-rating-score`);
+            controller.shake(userRatingFormElement);
+          });
+        break;
+      case `movie`:
+      default:
+        if (newData !== null) {
+          this._api.updateFilm(oldData.id, newData)
+            .then((filmsModel) => {
+              this._filmsModel.updateFilm(oldData.id, filmsModel);
+              this._updateFilms(this._showingFilmsCount);
+            });
+        }
+        break;
     }
   }
 

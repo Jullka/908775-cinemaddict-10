@@ -6,7 +6,7 @@ import CountCommentsComponent from '../components/count-comments-component.js';
 import CommentController from '../controllers/comments-controller.js';
 import FilmsModel from '../models/films-model.js';
 import CommentsModel from '../models/comments-model.js';
-import {RenderPosition, isSubmitPressed, render, remove, replace} from '../utils.js';
+import {SHAKE_ANIMATION_TIMEOUT, RenderPosition, render, remove, replace} from '../utils.js';
 
 const Mode = {
   DEFAULT: `default`,
@@ -35,7 +35,7 @@ export default class MovieController {
     this._closeDetails = this._closeDetails.bind(this);
     this._openDetails = this._openDetails.bind(this);
     this._onCommentChange = this._onCommentChange.bind(this);
-    this._onSubmitForm = this._onSubmitForm.bind(this);
+    // this._onSubmitForm = this._onSubmitForm.bind(this);
 
     this._commentsModel.setCommentChangeHandler(this._onCommentChange);
   }
@@ -72,6 +72,14 @@ export default class MovieController {
     if (isEscKey) {
       this._closeDetails();
     }
+  }
+
+  shake(container) {
+    container.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      container.style.animation = ``;
+    }, SHAKE_ANIMATION_TIMEOUT);
   }
 
   _prepeareFilm() {
@@ -131,42 +139,41 @@ export default class MovieController {
 
     if (this._film.isAlreadyWatched) {
       const detailsMiddleContainer = this._filmDetailsComponent.getElement().querySelector(`.form-details__middle-container`);
-      this._userRatingComponent = new UserRatingComponent(this._film).getElement();
-      render(detailsMiddleContainer, this._userRatingComponent);
-    }
-  }
-
-  _onSubmitForm(evt) {
-    if (isSubmitPressed(evt)) {
-      this._filmDetailsComponent.setFormSumbitHandler(() => {
-        const data = this._filmDetailsComponent.getData();
-        this._commentsModel.addComment(data);
-
-        const comments = this._commentsModel.getComments();
-        this._film.comments = comments;
-        this._filmsModel.updateFilm(this._film.id, this._film);
-
-        this._updateComments(comments);
+      this._userRatingComponent = new UserRatingComponent(this._film);
+      this._userRatingComponent.setChangeRatingHandler((userRating) => {
+        const newFilm = FilmsModel.clone(this._film);
+        newFilm.personalRating = parseInt(userRating, 10);
+        this._onDataChange(this, this._film, newFilm, `rating`);
       });
+      render(detailsMiddleContainer, this._userRatingComponent.getElement());
     }
   }
 
   _onCommentChange(commentController, oldData, newData) {
     if (newData === null) {
-      commentController.destroy();
-      this._commentsModel.removeComment(oldData);
+      this._api.deleteComment(oldData.id)
+        .then(() => {
+          commentController.destroy();
+          this._commentsModel.removeComment(oldData);
 
-      const comments = this._commentsModel.getComments();
-      this._film.comments = comments;
-      this._filmsModel.updateFilm(this._film.id, this._film);
+          const comments = this._commentsModel.getComments();
+          this._film.comments = comments;
+          this._filmsModel.updateFilm(this._film.id, this._film);
+          this._updateComments();
+        });
     }
-
-    this._updateComments();
   }
 
   _renderComments(comments) {
     this._detailsBottomElement = this._filmDetailsComponent.getElement().querySelector(`.form-details__bottom-container`);
     this._commentsComponent = new CommentsComponent();
+
+    this._commentsComponent.setFormSumbitHandler(() => {
+      const data = this._commentsComponent.getData();
+      this._commentsComponent.disabledForm();
+
+      this._onDataChange(this, this._film, data, `comment`);
+    });
 
     this._commentsComponent.setClickEmojiHandler();
 
@@ -205,8 +212,7 @@ export default class MovieController {
     remove(this._filmDetailsComponent);
     remove(this._commentsComponent);
     remove(this._countCommentsComponent);
-    document.removeEventListener(`keydown`, this._onSubmitForm);
-    document.removeEventListener(`keydown`, this._onSubmitForm);
+    document.removeEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _openDetails(film) {
@@ -222,7 +228,6 @@ export default class MovieController {
 
     render(document.querySelector(`body`), this._filmDetailsComponent.getElement());
     document.addEventListener(`keydown`, this._onEscKeyDown);
-    document.addEventListener(`keydown`, this._onSubmitForm);
   }
 
   setDefaultView() {

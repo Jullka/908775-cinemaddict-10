@@ -1,21 +1,8 @@
-import he from 'he';
 import CommentsComponent from './comments-component.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
-import {formatDate, formatTime} from '../utils.js';
+import {formatDate} from '../utils.js';
 
 const GENRES_NAME_SWITCH_LIMIT = 1;
-
-const parseFormData = (formData) => {
-  const date = new Date().getTime();
-  const comment = he.encode(formData.get(`comment`));
-
-  return {
-    id: String(Date.now() + Math.random()),
-    text: comment,
-    date,
-    emoji: `${formData.get(`comment-emoji`)}.png`
-  };
-};
 
 export default class FilmDetailsComponent extends AbstractSmartComponent {
   constructor(film) {
@@ -48,19 +35,15 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
     this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
   }
 
-  setFormSumbitHandler(handler) {
-    handler();
+  disabledForm() {
+    this.getElement().querySelector(`form`).disabled = true;
+  }
+
+  activateForm() {
+    this.getElement().querySelector(`form`).disabled = false;
   }
 
   recoveryListeners() {
-
-  }
-
-  getData() {
-    const form = this.getElement().querySelector(`form`);
-    const formData = new FormData(form);
-
-    return parseFormData(formData);
   }
 
   getTemplate() {
@@ -73,17 +56,17 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
               <img class="film-details__poster-img" src="${this._film.poster}" alt="">
-              <p class="film-details__age">${this._film.ratingPlus}</p>
+              <p class="film-details__age">${this._film.ratingPlus}+</p>
             </div>
             <div class="film-details__info">
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${this._film.title}</h3>
-                  <p class="film-details__title-original">Original: ${this._film.titleOriginal}</p>
+                  <p class="film-details__title-original">Original: ${this._film.title}</p>
                 </div>
 
                 <div class="film-details__rating">
-                  <p class="film-details__total-rating">${this._film.rating.toString()}</p>
+                  <p class="film-details__total-rating">${this._film.rating}</p>
                 </div>
               </div>
 
@@ -94,11 +77,11 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${this._film.writers}</td>
+                  <td class="film-details__cell">${this._film.writers.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${this._film.actors}</td>
+                  <td class="film-details__cell">${this._film.actors.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
@@ -106,7 +89,7 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${formatTime(this._film.duration)}</td>
+                  <td class="film-details__cell">${this._film.duration}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
@@ -131,11 +114,11 @@ export default class FilmDetailsComponent extends AbstractSmartComponent {
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
-        <div class="form-details__middle-container">
-        </div>
-        <div class="form-details__bottom-container">
-        </div>
       </form>
+      <div class="form-details__middle-container">
+      </div>
+      <div class="form-details__bottom-container">
+      </div>
     </section>`;
   }
 }
